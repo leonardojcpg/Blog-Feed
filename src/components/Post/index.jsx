@@ -1,17 +1,21 @@
 import Avatar from "../Avatar";
 import Comment from "../Comment";
 import styles from "./post.module.css";
-import {format, formatDistanceToNow} from "date-fns"
-import ptBR from "date-fns/locale/pt-BR";
+import {formatDistanceToNow} from "date-fns"
+import ptBR from "date-fns/locale/pt-BR"
 
 
 // author: {avatar_url:"", name:"", role:""}
 // publisheAt: Date
 // content: String
 const Post = ({author, publishedAt}) => {
-  const publishedDateFormatted = format(publishedAt, "d 'de LLLL 'às' HH:mm'h'", {
-    locale: ptBR,
-  });
+  const publishedDateFormatted = new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(publishedAt);
+
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     locale: ptBR,
     addSuffix: true,
@@ -31,9 +35,9 @@ const Post = ({author, publishedAt}) => {
           </div>
         </div>
 
-        <time title={publishedDateFormatted} dateTime={publishedAt.toISOstring()}>
+        <time title={publishedDateFormatted} dateTime="">
           {publishedDateRelativeToNow}
-        </time>
+        </time> 
       </header>
 
       <div className={styles.content}>
